@@ -1,0 +1,13 @@
+
+frutifresh:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      threads: 1
+      host: postgres_db
+      port: 5432
+      user: postgres
+      pass: postgres
+      dbname: frutifresh
+      schema: dbt_dev

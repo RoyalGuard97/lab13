@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  postgres_db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: frutifresh
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  dbt:
+    image: ghcr.io/dbt-labs/dbt-postgres:1.7.2
+    user: root
+    working_dir: /usr/app
+    volumes:
+      - .:/usr/app
+      - ~/.dbt:/root/.dbt
+    depends_on:
+      - postgres_db
+    environment:
+      DBT_PROFILES_DIR: /usr/app
+      DBT_PROJECT_DIR: /usr/app
+
+volumes:
+  postgres_data:

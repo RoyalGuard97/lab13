@@ -1,0 +1,31 @@
+
+version: 2
+
+sources:
+  - name: public
+    schema: public
+    tables:
+      - name: raw_customers
+      - name: raw_sales
+
+models:
+  - name: stg_customers
+    columns:
+      - name: id_cliente
+        tests:
+          - unique
+          - not_null
+      - name: status_cliente
+
+  - name: stg_sales
+    columns:
+      - name: id_transaccion
+        tests:
+          - unique
+          - not_null
+      - name: id_cliente
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: id_cliente
